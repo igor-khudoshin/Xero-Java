@@ -105,11 +105,26 @@ public class Config {
 	{
 		return AUTH_CALLBACK_URL;
 	}
+	
+	public static InputStream getFileAsInputStream(Class<?> classLoaderClass, String filename)
+	{
+		InputStream is = classLoaderClass.getResourceAsStream("/" + filename);
+		if (is == null) 
+		{
+			is = Thread.currentThread().getContextClassLoader().getResourceAsStream("/" + filename);
+		}
+		return is;
+	}
+	
+	public static InputStream getFileAsInputStream(String filename)
+	{
+		return getFileAsInputStream(Config.class, filename);
+	}
 	  
 	public void load() 
 	{
 		
-		InputStream inputStream = Config.class.getResourceAsStream("/" + configFile);
+		InputStream inputStream = Config.getFileAsInputStream(configFile);
 		InputStreamReader reader = new InputStreamReader(inputStream);
 
 		JSONParser parser = new JSONParser();

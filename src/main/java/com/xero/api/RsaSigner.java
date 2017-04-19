@@ -2,7 +2,6 @@ package com.xero.api;
 
 import com.google.api.client.auth.oauth.OAuthHmacSigner;
 import com.google.api.client.auth.oauth.OAuthRsaSigner;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
@@ -16,7 +15,7 @@ public class RsaSigner implements Signer {
 	public RsaSigner(Config config) {
 
 		InputStream oauthPKCS12Stream = null;
-		oauthPKCS12Stream = getClass().getResourceAsStream("/" + config.getPathToPrivateKey());
+		oauthPKCS12Stream = Config.getFileAsInputStream(getClass(), config.getPathToPrivateKey());
 		String oauthPKCS12Password = config.getPrivateKeyPassword();
 
 		KeyStore oauthKeyStore = null;
